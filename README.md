@@ -7,6 +7,13 @@
 > 把「文件夹」拖进来 → 打包成 `<文件夹名>.pak`
 > 把「`.pak`」拖进来 → 解包成 `<文件名>` 文件夹
 
+⬇️ **下载成品（Windows）：[Releases](https://github.com/KMCome/SBpakTool/releases)**
+本仓库只放源码和文档，可执行文件在 Release 附件里，解压即用。
+
+⬇️ **Download (Windows): [Releases](https://github.com/KMCome/SBpakTool/releases)**
+This repository holds source and docs only — the executables are attached to
+the Releases page. Unzip and run.
+
 ---
 
 ## ⚠️ 关于这个工具 & 免责声明
@@ -92,6 +99,11 @@ SBpakTool 是一个「拖拽即用」的小工具，帮你完成 Starbound 资�
 每个文件都写清楚：谁做的、干什么用的、发给别人时要不要带上。
 （标 ★ 的是分发时必须要的）
 
+> **文档（本仓库里有的）和程序（在 Release 里的）是分开的**：
+> 仓库里只有源码、说明书、授权这些文本文件（几百 KB）；
+> 三个 `.exe` 都在 [Releases](https://github.com/KMCome/SBpakTool/releases)
+> 的附件 zip 里 —— 想直接用工具的话，去那里下载解压即可。
+
 - **`pak_tool.py`** —— 主程序源码
   - 来源：本项目 ｜ 分发：不需要
   - 可读可改，需要装 Python 才能直接运行
@@ -143,6 +155,8 @@ SBpakTool 是一个「拖拽即用」的小工具，帮你完成 Starbound 资�
 
 ## 3. 30 秒上手
 
+0. 先去 [Releases](https://github.com/KMCome/SBpakTool/releases) 下载最新
+   的 zip，解压出来（仓库里没有 exe）
 1. 确认 `pak_tool.exe`、`asset_packer.exe`、`asset_unpacker.exe`
    在**同一个文件夹**里
 2. 把要处理的文件夹（或 `.pak` 文件）**拖到 `pak_tool.exe` 图标上**
@@ -377,6 +391,11 @@ Who it is for: Starbound modders who need to turn a mod folder into a
 For every file: who made it, what it does, and whether you need to include
 it when you share this tool. (★ = required when sharing)
 
+> **Docs live in this repository; the program lives in Releases.** The repo
+> only holds text files (a few hundred KB). All three `.exe` files are in the
+> zip attached to [Releases](https://github.com/KMCome/SBpakTool/releases) —
+> download and unzip if you just want to use the tool.
+
 - **`pak_tool.py`** — main program source
   - Origin: this project | Share: no
   - Readable and editable; needs Python installed to run directly
@@ -432,6 +451,9 @@ replace the old files next to this tool — no change needed here.
 
 ## 3. Quick start
 
+0. Grab the latest zip from
+   [Releases](https://github.com/KMCome/SBpakTool/releases) and unzip it
+   (the executables are not in this repository)
 1. Make sure `pak_tool.exe`, `asset_packer.exe` and `asset_unpacker.exe`
    are in the **same folder**
 2. **Drag** the folder (or `.pak` file) you want to process **onto
