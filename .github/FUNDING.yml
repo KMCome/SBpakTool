@@ -1,0 +1,24 @@
+# ============================================================
+#  GitHub 仓库右上角的「Sponsor」按钮，就是读这个文件。
+#  GitHub reads this file to build the "Sponsor" button on your repo.
+#
+#  已填好 / already configured：
+#    爱发电 → 走下面的 custom（不依赖任何平台资格）
+#    微信收款码 → GitHub 的 FUNDING 不支持图片，请放 donate_wechat.jpg
+# ============================================================
+
+custom:
+  - "https://afdian.com/a/KMCome"
+
+# --- 下面这些是备选，用不上就保持注释 / optional, leave commented ---
+# github: [your-github-username]          # 需先开通 GitHub Sponsors（中国大陆暂不支持）
+# ko_fi: your-kofi-name                   # 提现走 PayPal，同样涉及跨境
+# patreon: your-patreon-name
+# buy_me_a_coffee: your-bmac-name
+# open_collective: your-collective-name
+# liberapay: your-liberapay-name
+
+# 提示 / Tip:
+# ・custom 最多 4 个链接；改完把文件 push 上去，仓库右上角就会出现 Sponsor 按钮。
+# ・微信收款码不是链接，GitHub 无法做成按钮，请让用户扫 README 里的图片。
+# ・只放国内渠道也没关系：工具是免费给的，国外用户不赞助照样能用。
