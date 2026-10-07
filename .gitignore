@@ -1,0 +1,34 @@
+# ============================================================
+#  上传到 GitHub 时不想提交的文件（Git 会照着这份清单忽略它们）
+#  Files Git should ignore when you publish this to GitHub
+# ============================================================
+
+# 运行 / 测试产生的垃圾
+# runtime and test leftovers
+pak_tool.log
+__pycache__/
+*.pyc
+_test_area/
+_e2e_area/
+_sim_area/
+.paktool_tmp_*
+.paktool_bin_*
+.paktool_spool/
+
+# 打包 exe 的中间产物与成品
+# exe build intermediates and output
+build/
+*.spec
+pak_tool.exe
+pak_tool/
+SBpakTool-release/
+
+# ------------------------------------------------------------
+# 说明：上面把 pak_tool.exe 和两个官方 exe 之外的成品都排除掉了。
+# 如果你想连 exe 一起放进仓库（不太推荐，二进制文件会让仓库变臃肿），
+# 就把 pak_tool.exe 那几行删掉。
+#
+# Note: pak_tool.exe and the release folder are ignored on purpose -
+# put the .exe in a GitHub "Release" instead of in the repository.
+# Delete those lines if you really want the binary in the repo.
+# ------------------------------------------------------------
