@@ -1,11 +1,15 @@
 ﻿# SBpakTool 使用说明书
 
-**Starbound 资源包 (`.pak`) 打包 / 解包 —— 拖一下就完事**
+**Starbound Mod 打包 / 解包工具：把 `资源包文件夹` 一键打成 `.pak`，或把 `.pak` 解开**
+**Drag-and-drop packer / unpacker for Starbound mods and `.pak` assets**
 
-版本 2.0 ｜ 完整说明书（中文 + English）
+中文说明在前，English 在后 ｜ 版本 2.0
 
-> 把「文件夹」拖进来 → 打包成 `<文件夹名>.pak`
+> 把「文件夹」拖进来 → 打包成 `<文件夹名>.pak`（可上传 Steam 创意工坊）
 > 把「`.pak`」拖进来 → 解包成 `<文件名>` 文件夹
+>
+> Starbound mod packing, Starbound .pak unpacking, Workshop-ready output.
+> 中英双语界面 · 不需要安装 Python · 支持中文路径
 
 ⬇️ **下载成品（Windows）：[Releases](https://github.com/KMCome/SBpakTool/releases)**
 本仓库只放源码和文档，可执行文件在 Release 附件里，解压即用。
