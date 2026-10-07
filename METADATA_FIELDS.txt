@@ -1,0 +1,205 @@
+﻿================================================================
+  Starbound Mod 元数据文件  _metadata  字段说明
+  Starbound mod metadata file "_metadata" - field reference
+================================================================
+
+
+================================================================
+一、这个文件是什么 / What this file is
+================================================================
+
+  在 Mod 文件夹的【根目录】放一个文件，文件名就叫
+
+        _metadata
+
+  ★ 没有扩展名。不是 _metadata.txt，也不是 _metadata.json。
+
+  Put a file named exactly   _metadata   in the ROOT of your mod folder.
+  ★ No extension. Not "_metadata.txt", not "_metadata.json".
+
+  游戏靠这个文件知道三件事：
+      1. 这个 Mod 叫什么（玩家看到的名字 / 内部标识）
+      2. 它依赖哪些别的 Mod
+      3. 它和别的 Mod 改了同一份东西时，谁说了算
+
+  The game reads it to learn: the mod's name (both the one players see and
+  the internal id), what it depends on, and which mod wins when two mods
+  change the same thing.
+
+  三条硬性要求 / Three hard requirements:
+    1) 必须是 UTF-8 编码。用别的编码（比如 GBK）保存，打包工具和游戏
+       都会读取失败。
+       Must be UTF-8. Saved as GBK/ANSI, both the packer and the game fail.
+    2) 它是 JSON 格式：不能写注释(//)，最后一项后面不能有多余逗号(,)。
+       It is JSON: no comments (//), no trailing comma after the last item.
+    3) 打包成 .pak 时，它必须在 .pak 的根目录 —— 也就是你拖进工具的
+       那个文件夹的第一层。
+       When packed, it must sit at the root of the .pak - i.e. directly
+       inside the folder you drag onto the tool.
+
+
+================================================================
+二、模板 / Template
+================================================================
+
+  下面这份可以直接抄，把内容换成你自己的即可。
+
+  Copy this and replace the values with your own.
+
+{
+  "name": "my_custom_sword_mod",
+  "friendlyName": "My Powerful Sword",
+  "author": "YourName",
+  "version": "1.0.0",
+  "description": "Adds a high damage melee sword. / 新增一把高伤害近战长剑",
+  "link": "https://steamcommunity.com/id/yourname",
+  "priority": 5,
+  "includes": ["vanilla_extra"],
+  "requires": ["core_utilities"],
+  "tags": ["Weapons", "Items"]
+}
+
+
+================================================================
+三、每个字段是什么意思 / Field reference
+================================================================
+
+  ── name ──────────────────────────────── 必填 / REQUIRED
+     中文：这个 Mod 的"身份证号"。游戏内部用它来识别 Mod，
+           别的 Mod 想依赖你，写的也是这个名字（不是 friendlyName）。
+           规则：不能和别的 Mod 重复；建议全小写英文 + 下划线。
+           换个 Mod 就要换个名字，不要复制粘贴沿用。
+     EN  : The mod's internal id. Other mods reference you by THIS name,
+           not by friendlyName. Must be unique across all installed mods.
+           Lowercase letters and underscores are recommended.
+     例   : "name": "my_custom_sword_mod"
+
+  ── friendlyName ───────────────────────── 强烈建议写
+     中文：玩家在游戏 Mod 列表里看到的名字，随便写，中文英文符号都行，
+           和 name 完全无关（两个可以不一样）。
+     EN  : The name players see in the in-game mod list. Anything you
+           like; it has nothing to do with "name".
+     例   : "friendlyName": "My Powerful Sword"
+
+  ── author ─────────────────────────────── 可选 / optional
+     中文：作者名，显示用。
+     EN  : Your name, for display.
+     例   : "author": "YourName"
+
+  ── version ────────────────────────────── 可选 / optional
+     中文：版本号，比如 1.0.0。更新 Mod 时记得改一下，方便别人区分。
+     EN  : Version string, e.g. 1.0.0. Bump it when you update.
+     例   : "version": "1.0.0"
+
+  ── description ─────────────────────────── 可选 / optional
+     中文：一段简介，显示在 Mod 列表里。想写中英双语就写在同一行里。
+     EN  : Short description shown in the mod list.
+     例   : "description": "Adds a high damage sword."
+
+  ── link ───────────────────────────────── 可选 / optional
+     中文：作者主页或工坊链接。
+     EN  : Author profile or Workshop link.
+     例   : "link": "https://steamcommunity.com/id/yourname"
+
+  ── priority ───────────────────────────── 可选 / optional，默认 0
+     中文：加载优先级，整数。★数字越大越晚加载。
+           晚加载 = 会覆盖先加载的 Mod 改过的同一份资源。
+           所以想让自己的 Mod "盖住"别人，就把这个数字调大。
+     EN  : Integer, default 0. ★Higher loads LATER, and a later mod
+           overrides the same resources changed by earlier mods.
+           Raise it if you want to win against another mod.
+     例   : "priority": 5
+
+  ── requires ───────────────────────────── 可选 / optional
+     中文：硬依赖。里面写的 Mod【必须】已经安装，否则游戏启动时会直接
+           报错甚至卡死。只写真正离不开的。
+           写的是对方的 name（不是 friendlyName）。
+     EN  : Hard dependency. Every mod listed here MUST be installed, or the
+           game errors out / hangs at startup. Use the other mod's "name".
+     例   : "requires": ["core_utilities"]
+
+  ── includes ───────────────────────────── 可选 / optional
+     中文：软依赖，只是让这些 Mod 比你先加载。缺了也不会报错，游戏照常开。
+           不确定该用 requires 还是 includes 时，选 includes 更安全。
+     EN  : Soft dependency: loads those mods before yours. Missing ones do
+           NOT cause an error. When in doubt, use includes - it is safer.
+     例   : "includes": ["vanilla_extra"]
+
+  ── tags ───────────────────────────────── 可选 / optional
+     中文：工坊分类标签，例如 "Weapons"、"Items"、"Interface"。
+     EN  : Steam Workshop category tags, e.g. Weapons / Items / Interface.
+     例   : "tags": ["Weapons", "Items"]
+
+  ── steamContentId ─────────────────────── 不要手写 / do not write by hand
+     中文：Steam 工坊的上传 ID。★上传工具会自动填，你自己写反而容易写错，
+           写错了会导致以后更新上传失败。第一次上传前不用管这一项。
+     EN  : The Workshop item id. ★The upload tool fills this in for you;
+           writing it yourself can break future updates. Leave it out
+           until the Workshop gives you one.
+     例   : "steamContentId": 1234567890
+
+
+================================================================
+四、最容易犯的错 / Most common mistakes
+================================================================
+
+  1) 文件名带扩展名
+     错：_metadata.txt / _metadata.json
+     对：_metadata            ← 一个字母都不能多
+     Wrong: _metadata.txt or _metadata.json. Right: exactly _metadata.
+
+  2) 放错了层级
+     错： MyMod\MyMod2\_metadata     （拖 MyMod 打包 → 里面没有 _metadata）
+     对： MyMod\_metadata            （拖 MyMod 打包）
+     The file must be in the folder you actually drag onto the tool.
+
+  3) 用记事本另存成了 ANSI/GBK 编码
+     → 打包时直接报"不是 UTF-8 编码"。另存为时把编码选成 UTF-8。
+     Saved as ANSI/GBK -> packing fails with an encoding error. Save as UTF-8.
+
+  4) JSON 写坏了：多了逗号、少了引号、写了注释
+     → 打包工具自己会解析这个文件，写坏了必然打包失败。
+       工具会提前拦下并告诉你第几行第几列出错。
+     Broken JSON (trailing comma, missing quote, // comment) makes packing
+     fail. The tool blocks it early and tells you the exact line/column.
+
+  5) 两个 Mod 用了同一个 name
+     → 互相覆盖、依赖错乱。给自己的每个 Mod 起不同的名字。
+     Two mods sharing one "name" overwrite and confuse each other.
+
+  6) 把 requires 当成 includes 乱写
+     → requires 写错一个，别人装了就开不了游戏。不确定就用 includes。
+     A wrong entry in "requires" stops other people's games from starting.
+     Use "includes" if unsure.
+
+
+================================================================
+五、最小可用模板 / Minimal working template
+================================================================
+
+  只想让 Mod 能被识别，写这两行就够了：
+
+  The bare minimum - these two lines are enough:
+
+{
+  "name": "my_mod",
+  "friendlyName": "My Mod"
+}
+
+
+================================================================
+  说明 / Note
+  ------------------------------------------------------------------
+  本文件只是【字段速查表】，不是 Mod 里要用的文件本身。
+  请不要把本文件复制进 Mod 文件夹 —— 它叫 METADATA_FIELDS.txt，
+  游戏不认。真正要放进 Mod 根目录的文件名是 _metadata（无扩展名）。
+
+  This file is only a REFERENCE. Do not copy it into your mod folder:
+  it is named METADATA_FIELDS.txt and the game ignores it. The file that
+  belongs in your mod root is named exactly _metadata (no extension).
+
+  字段与用法以游戏/工坊实际表现为准。本说明由 DeepSeek（AI）整理，仅供参考，
+  欢迎随意传阅。
+  Field behaviour follows the actual game/Workshop. This reference was
+  written by DeepSeek (AI) and is provided as-is - feel free to pass it on.
+================================================================
