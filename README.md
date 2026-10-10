@@ -255,13 +255,26 @@ README.md
 可选再带上 `METADATA_FIELDS.txt`（对方要自己写 Mod 时用得上）。
 压缩成 zip 发出去即可。
 
-**最省事的做法**：双击 `build_exe.py`，它会自动
+**最省事的做法**：双击 `build_exe.py`，它会直接生成一个
+`SBpakTool-release` 文件夹 —— 程序、两个官方工具、说明书全都在里面，
+而且会自动校验完整性（缺 `_internal` 这种"拿到手打不开"的残包会被当场拦下）。
 
-1. 生成 `pak_tool.exe`（带图标、无黑框）
-2. 建一个 `SBpakTool-release` 文件夹，把上面这些文件都放进去
+你直接把这个文件夹压缩发人就行。构建过程不产生多余的中间副本。
 
-你直接压缩那个文件夹发人就行。如果对方电脑上的杀毒软件误拦单文件版，
-改用 `python build_exe.py onedir`（生成文件夹版，启动更快、更不容易被误杀）。
+> ⚠️ **自己构建的前提**：本目录里必须有 `asset_packer.exe` 和 `asset_unpacker.exe`。
+> **本仓库只放源码，没有上传这两个 exe** —— 它们属于 OpenStarbound 项目。
+> 请先从本项目的 [Releases](https://github.com/KMCome/SBpakTool/releases) 下载 zip
+> 取出这两个文件（或从
+> [OpenStarbound](https://github.com/OpenStarbound/OpenStarbound) 获取），
+> 放到 `build_exe.py` 旁边再构建。
+> 缺了它们 `build_exe.py` 会**直接报错并告诉你去哪拿**，不会生成一个用不了的发布包。
+
+> **为什么只有文件夹版、没有单文件版？**
+> 单文件版每次运行都要把自己解压到系统临时目录，有两个硬伤：
+> 系统临时目录不可写时会直接报 `Could not create temporary directory!`；
+> 而且"自解压"正是杀毒软件最敏感的特征，误报多得多。文件夹版没有这两个问题。
+> **注意：别人拿到后要把整个文件夹一起用**，别把 `pak_tool.exe` 单独拖出去
+> （旁边的 `_internal` 是运行库，缺了打不开）。
 
 ## 7. 特点一览
 
@@ -327,6 +340,23 @@ Windows 有 260 字符限制。把 Mod 文件夹移到浅一点的目录
 **Q10：`pak_tool.log` 是什么？**
 运行日志，出问题时可以拿它排查，平时随手删掉也没关系，
 下次运行会重新生成。
+
+**Q11：杀毒软件报毒 / Windows 提示「已保护你的电脑」？**
+这是 PyInstaller 打包程序的通病（会把自己解压到临时目录再运行，而且没有
+数字签名），**不是真的有病毒**。三种处理办法：
+
+- Windows 弹窗时点「更多信息」→「仍要运行」
+- 右键 `pak_tool.exe` → 属性 → 勾选「解除锁定」→ 确定（从网上下载的文件会带这个标记）
+- 在杀毒软件里把这个文件夹加进信任区
+
+如果反复被拦，用下面两步处理（**不是真的有病毒**）：
+
+- 右键 `pak_tool.exe` → 属性 → 勾选「解除锁定」→ 确定
+- 杀毒软件里把这个文件夹加进信任区
+
+另外说明：本程序是**文件夹版**（不自解压，不需要系统临时目录），
+**不需要管理员权限**（内嵌 manifest 是 `asInvoker`），
+也不会向系统目录写任何东西，只会读写你自己选的那些文件夹。
 
 ## 9. 命令行参数
 
@@ -559,14 +589,31 @@ README.md
 Optionally add `METADATA_FIELDS.txt` (useful if they write mods themselves).
 Zip that folder and send it.
 
-**Easiest way**: double-click `build_exe.py`. It will
+**Easiest way**: double-click `build_exe.py`. It produces a ready-to-ship
+`SBpakTool-release` folder directly — the program, both official tools and the
+docs — and verifies it (so you can never hand out a package that is missing
+its `_internal` runtime and refuses to start).
 
-1. build `pak_tool.exe` (with icon, no console window)
-2. create a `SBpakTool-release` folder containing the files above, ready to zip
+Zip that folder and send it. No leftover intermediate copy is created.
 
-If antivirus ever blocks the single-file build, use
-`python build_exe.py onedir` (folder build: starts faster, less likely to be
-flagged).
+> ⚠️ **Before you build**: `asset_packer.exe` and `asset_unpacker.exe` must be
+> present in this folder. **They are not uploaded to this repository** (it holds
+> source only) — they belong to the OpenStarbound project.
+> Grab the zip from
+> [Releases](https://github.com/KMCome/SBpakTool/releases) and take those two
+> files out of it (or get them from
+> [OpenStarbound](https://github.com/OpenStarbound/OpenStarbound)), put them
+> next to `build_exe.py`, then build.
+> Without them `build_exe.py` **stops with an error telling you where to get
+> them** instead of producing a package that cannot run.
+
+> **Why only a folder build, no single-file build?**
+> A single-file build unpacks itself into the system temp folder on every run:
+> it fails with `Could not create temporary directory!` when that folder is
+> not writable, and self-extraction is exactly what antivirus heuristics flag.
+> The folder build has neither problem.
+> **Tell your users to keep the whole folder together** — do not move
+> `pak_tool.exe` out on its own (the `_internal` folder next to it is required).
 
 ## 7. Features
 
@@ -640,6 +687,24 @@ No. They do the actual work; the tool only drives them.
 **Q10 What is `pak_tool.log`?**
 The run log. Useful when reporting a problem; safe to delete — it is
 recreated on the next run.
+
+**Q11 Antivirus flags it / "Windows protected your PC"**
+That is a well-known PyInstaller trait (it unpacks itself into a temp folder
+and has no code signature), **not an actual infection**. Three ways around it:
+
+- On the Windows prompt click "More info", then "Run anyway"
+- Right-click `pak_tool.exe` → Properties → tick **Unblock** → OK (files
+  downloaded from the internet carry that mark)
+- Add the folder to your antivirus' trusted list
+
+If it keeps getting blocked, two steps are enough (**it is not an infection**):
+
+- Right-click `pak_tool.exe` → Properties → tick **Unblock** → OK
+- Add the folder to your antivirus' trusted list
+
+For the record: this is the **folder build** (no self-extraction, no system
+temp folder needed) and it needs **no administrator rights** (its embedded
+manifest is `asInvoker`); it writes nothing outside the folders you pick.
 
 ## 9. Command line
 
